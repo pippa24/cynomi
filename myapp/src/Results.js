@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReactECharts from 'echarts-for-react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from '@mui/material';
+import ApiUrl from './apiConfig';
 
 function Results() {
     const [userData, setUserData] = useState([]);
@@ -11,7 +12,7 @@ function Results() {
     useEffect(() => {
         async function fetchUserData() {
             try {
-                const response = await axios.get('http://localhost:5001/api/users');
+                const response = await axios.get(`${ApiUrl}/api/users`);
                 setUserData(response.data);
             } catch (error) {
                 console.error('Error fetching user data:', error);
@@ -22,7 +23,7 @@ function Results() {
 
     const fetchSleepTimeData = async (userName) => {
         try {
-            const response = await axios.get(`http://localhost:5001/api/sleepTimeData/${userName}`);
+            const response = await axios.get(`${ApiUrl}/api/sleepTimeData/${userName}`);
             setSleepTimeData(response.data);
         } catch (error) {
             console.error('Error fetching sleep time data:', error);

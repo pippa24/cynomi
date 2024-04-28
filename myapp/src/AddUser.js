@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material'
+import ApiUrl from './apiConfig';
 
 export function AddUser () {
   const [name, setName] = useState('')
@@ -15,7 +16,7 @@ export function AddUser () {
       return
     }
     try {
-      await axios.post('http://localhost:5001/api/addUser', {name, gender, sleepTimeDuration})
+      await axios.post(`${ApiUrl}/api/addUser`, {name, gender, sleepTimeDuration})
       alert('User added successfully')
     } catch (error) {
       alert('Error adding user')
