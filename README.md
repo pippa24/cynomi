@@ -78,5 +78,5 @@ This repository contains the code for setting up a front-end
     node server.js
     ```
 
-   The server will start running on port `5000` by default.
+   The server will start running on port `5001` by default.
 
