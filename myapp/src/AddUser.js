@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material'
-import ApiUrl from './apiConfig';
+import ApiUrl from './apiConfig'
 
 export function AddUser () {
   const [name, setName] = useState('')
   const [gender, setGender] = useState('')
   const [sleepTimeDuration, setSleepTimeDuration] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
+  const [confirmationMessage, setConfirmationMessage] = useState('')
   
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -15,11 +16,18 @@ export function AddUser () {
       setErrorMessage('Please fill out all fields')
       return
     }
+    if (sleepTimeDuration <= 0 || sleepTimeDuration > 24) {
+      setErrorMessage('Please enter valid sleep duration')
+      return
+    }
     try {
       await axios.post(`${ApiUrl}/api/addUser`, {name, gender, sleepTimeDuration})
-      alert('User added successfully')
+      // alert('User added successfully')
+      setErrorMessage('')
+      setConfirmationMessage('User added successfully')
     } catch (error) {
-      alert('Error adding user')
+      setErrorMessage('Error adding user')
+      
     }
   }
   
@@ -65,6 +73,9 @@ export function AddUser () {
           </Grid>
           <Grid item xs={12}>
             {errorMessage && <Typography style={{color: 'red'}}>{errorMessage}</Typography>}
+          </Grid>
+          <Grid item xs={12}>
+            {confirmationMessage && <Typography style={{color: 'green'}}>{confirmationMessage}</Typography>}
           </Grid>
           <Grid item xs={12}>
             <Button type="submit" variant="contained" color="primary">Submit</Button>
